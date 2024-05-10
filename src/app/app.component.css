@@ -1,0 +1,5 @@
+.image-size {
+    width: 250px; /* ou une largeur spécifique en pixels ou en pourcentage */
+    height: 187px; /* garde le ratio aspect */
+}
+  

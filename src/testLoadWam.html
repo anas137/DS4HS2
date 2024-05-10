@@ -1,0 +1,131 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" href="#" />
+  <title>Plugin</title>
+  <script type="module" src="https://mainline.i3s.unice.fr/wam_wc/wam-host/wamHost.js"></script>
+  <script type="module" src="https://mainline.i3s.unice.fr/wam_wc/wam-plugin/wamPlugin.js"></script>
+  <link rel="stylesheet" href="./css/styleWAM.css">
+</head>
+
+<body>
+  <a href="index.html" class="go-back-button">Go Back</a>
+
+  <wam-host>
+    <wam-plugin id="wamRemotee" src="https://www.webaudiomodules.com/community/plugins/burns-audio/audio_input/index.js"></wam-plugin>
+  </wam-host>
+
+  <div id="embedBox">
+    <label for="embedCode">Simple Code for Host:</label>
+    <textarea id="embedCode" readonly></textarea>
+    <button onclick="generateEmbedCode()">Generate & Copy Embed Code</button>
+  </div>
+  <div id="embedBox2">
+    <label for="embedCode">Complete version:</label>
+    <textarea id="embedCode2" readonly></textarea>
+    <button onclick="generateEmbedCode2()">Generate & Copy Embed Code</button>
+  </div>
+  <label>URL Plugin:</label>
+  <p id="keyword"> </p>
+
+  <script>
+    // recuperation du parametre http url
+    const urlParams = new URLSearchParams(window.location.search);
+    const url = urlParams.get('url');
+    const keywords = urlParams.get('keywords');
+    document.getElementById("keyword").innerHTML = keywords;
+    let p = document.createElement('p');
+    p.innerHTML = url;
+    document.body.appendChild(p);
+    // on change la valeur de l'attribut src de l'élément avec id wamRemote
+    const wamPlugin = document.querySelector('#wamRemote');
+    wamPlugin.setAttribute('src', url);
+    function generateEmbedCode() {
+      let embedCode = `<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Simple host that loads a non bundled plugin</title>
+</head>
+<body>
+<main>
+<audio id="player" src="https://wasabi.i3s.unice.fr/WebAudioPluginBank/BasketCaseGreendayriffDI.mp3" controls
+loop crossOrigin="anonymous">
+</audio>
+<div id="mount"></div>
+</main>
+<script>
+const player = document.querySelector('#player');
+const mount = document.querySelector('#mount');
+const AudioContext = window.AudioContext // Default
+	|| window.webkitAudioContext 
+	|| false;
+const audioContext = new AudioContext();
+const mediaElementSource = audioContext.createMediaElementSource(player);
+
+// Very simple function to connect the plugin audionode to the host
+const connectPlugin = (audioNode) => {
+	mediaElementSource.connect(audioNode);
+	audioNode.connect(audioContext.destination);
+};
+const mountPlugin = (domNode) => {
+	mount.innerHtml = '';
+	mount.appendChild(domNode);
+};
+(async () => {
+	// Init WamEnv
+	const { default: initializeWamHost } = await import("https://mainline.i3s.unice.fr/wam2/packages/sdk/src/initializeWamHost.js");
+	const [hostGroupId] = await initializeWamHost(audioContext);
+  // Import WAM
+	const { default: WAM } = await import('`+ url + `');
+	// Create a new instance of the plugin
+	const instance = await WAM.createInstance(hostGroupId, audioContext);
+	window.instance = instance;
+  // Connect the audionode to the host
+	connectPlugin(instance.audioNode);
+  const pluginDomNode = await instance.createGui();
+
+	mountPlugin(pluginDomNode);
+  player.onplay = () => {
+		audioContext.resume(); // audio context must be resumed because browser restrictions
+	};
+})();
+<\/script>
+</body>
+</html>` ;
+      //<iframe src="${url}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`; 
+      document.getElementById('embedCode').value = embedCode;
+      let boxContent = document.getElementById('embedCode');
+      boxContent.select();
+      document.execCommand('Copy');
+    }
+
+    function generateEmbedCode2() {
+      let embedCode = `<html>
+<head>
+  <script type="module" src="https://mainline.i3s.unice.fr/wam_wc/wam-host/wamHost.js"> <\/script>
+    <script type="module" src="https://mainline.i3s.unice.fr/wam_wc/wam-plugin/wamPlugin.js"><\/script>
+  </head>
+      <wam-host>
+      <wam-plugin
+        id="wamRemote"
+        src="`+ url + `"
+      ></wam-plugin>
+      <!-- <wam-plugin src="../../packages/faustPingPongDelay/plugin/index.js"></wam-plugin> -->
+    </wam-host>
+
+</body>
+</html>` ;
+      //<iframe src="${url}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`; 
+      document.getElementById('embedCode2').value = embedCode;
+      let boxContent = document.getElementById('embedCode2');
+      boxContent.select();
+      document.execCommand('Copy');
+    }
+
+  </script>
+
+</body>
+
+</html>

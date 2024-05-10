@@ -1,0 +1,107 @@
+/* Overall body styles for a consistent font and background */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font family */
+  background-color: #eef1f5; /* Slightly lighter shade for a fresher look */
+  color: #212529; /* Good contrast for readability */
+}
+
+/* Header styling with gradient background */
+h1 {
+  text-align: center;
+  padding: 20px 0;
+  background-image: linear-gradient(to right, #0061ff, #60efff); /* Blue gradient for visual interest */
+  color: white; /* White text for contrast */
+  font-size: 2.4rem; /* Slightly adjusted size for impact */
+  margin-bottom: 20px; /* Separation from content */
+}
+
+/* Input field styling */
+input[type="text"] {
+  display: flex; /* Use flexbox for easy alignment and positioning */
+  align-items: center; /* Aligns children vertically in the middle */
+  position: relative; /* Establishes a positioning context */
+  width: 600px; /* Size container */
+  margin: 0 auto;
+}
+
+
+input[type="text"] {
+  padding: 10px 40px 10px 10px; /* Adjust padding to make space for the icon */
+  margin: 0 auto; /* Centering the input */
+  border: 2px solid #007bff; /* Stylish border color */
+  border-radius: 5px; /* Rounded borders for a modern look */
+  width: 100%; /* Full width of its container */
+  max-width: 600px; /* Maximum width set for better layout control */
+  box-sizing: border-box; /* Border and padding included in width */
+  background-color: #fff; /* Background color */
+  background-image: url('https://www.svgrepo.com/svg/89385/search'); /* Path to your search icon */
+  background-position: right 10px center; /* Position the background image on the right */
+  background-repeat: no-repeat; /* Do not repeat the background image */
+  font-size: 16px; /* Readable font size */
+  outline: none; /* Removes the default focus outline */
+}
+
+input[type="text"]:focus {
+  border-color: #0056b3; /* Darker border color on focus */
+}
+/* Button styling with improved interactions */
+button {
+  padding: 8px 16px;
+  margin: 0 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+}
+
+button:disabled {
+  background-color: #cccccc;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Image size adjustments for better layout */
+.image-size {
+  width: 100%;
+  height: auto;
+  max-width: 250px;
+  border-radius: 8px; /* Rounded corners for a softer look */
+}
+
+/* Pagination control enhancements for better alignment and interactivity */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 10px 0;
+}
+
+.pagination-controls button {
+  padding: 8px 16px;
+}
+
+.pagination-controls button:disabled {
+  opacity: 0.5;
+}
+
+.pagination-controls span {
+  margin: 0 15px;
+  font-weight: bold;
+}
+
+
+a:hover {
+  text-decoration: underline;
+}

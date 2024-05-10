@@ -1,0 +1,29 @@
+<body>
+<h1>WebAudioModule Gallery</h1>
+
+
+<button (click)="sortByName()">Sort A-Z</button>
+<button (click)="sortByNameZ()">Sort Z-A</button>
+<button (click)="sortByVendor()">Sort by Vendor</button>
+<button (click)="resetFilter()">Reset Filter</button><br><br>
+<input type="text" [(ngModel)]="searchQuery" (input)="handleSearchChange(searchQuery)" placeholder="Search plugins...">
+
+<p>{{ totalFound }} Plugins found</p>
+
+<div *ngFor="let item of data">
+    <ul>
+      <li>
+        <!-- Utilisation de routerLink pour naviguer avec un paramètre -->
+        <a [routerLink]="['/wamhost-wc', item.path]">{{ item.name }}</a>
+        <p>{{ item.description }}</p>
+        <img src="https://www.webaudiomodules.com/community/plugins/{{ item.thumbnail }}" class="image-size" alt="{{ item.name }}">
+      </li>
+    </ul>
+  </div>
+
+
+  <div class="pagination-controls" *ngIf="!searchQuery">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div></body>
